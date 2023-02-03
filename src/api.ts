@@ -62,3 +62,12 @@ export function fetchUpdateToDo(
     },
   }).then((res) => res.json());
 }
+
+export function fetchDeleteToDo(accessToken: string, id: number) {
+  return fetch(`${BASE_URL}/todos/:${id}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }).then((res) => res.json());
+}

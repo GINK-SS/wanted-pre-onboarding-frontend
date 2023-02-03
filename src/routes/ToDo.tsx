@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { fetchCreateToDo, fetchGetToDos, fetchUpdateToDo } from '../api';
+import { fetchCreateToDo, fetchDeleteToDo, fetchGetToDos, fetchUpdateToDo } from '../api';
 import { IGetToDos, IUpdateToDo } from '../type';
 
 const NewToDoForm = styled.form``;
@@ -11,6 +11,7 @@ const ToDoWrapper = styled.li``;
 const ToDoLabel = styled.label``;
 const ToDoCheckBox = styled.input``;
 const ToDoContent = styled.span``;
+const ToDoButton = styled.button``;
 
 function ToDo() {
   const ACCESS_TOKEN = localStorage.getItem('wantedAccessToken') as string;
@@ -33,6 +34,12 @@ function ToDo() {
 
   const finishHandler = async ({ id, toDo, isCompleted }: IUpdateToDo) => {
     const response = await fetchUpdateToDo(ACCESS_TOKEN, { id, toDo, isCompleted });
+    const fetchToDos: IGetToDos[] = await fetchGetToDos(ACCESS_TOKEN);
+    setToDos(fetchToDos);
+  };
+
+  const deleteToDo = async (id: number) => {
+    const response = await fetchDeleteToDo(ACCESS_TOKEN, id);
     const fetchToDos: IGetToDos[] = await fetchGetToDos(ACCESS_TOKEN);
     setToDos(fetchToDos);
   };
@@ -66,6 +73,10 @@ function ToDo() {
               />
               <ToDoContent>{toDo}</ToDoContent>
             </ToDoLabel>
+            <ToDoButton data-testid="modify-button">수정</ToDoButton>
+            <ToDoButton data-testid="delete-button" onClick={() => deleteToDo(id)}>
+              삭제
+            </ToDoButton>
           </ToDoWrapper>
         ))}
       </ToDosContainer>
