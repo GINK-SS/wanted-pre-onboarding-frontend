@@ -6,6 +6,11 @@ import { IGetToDos } from '../type';
 const NewToDoForm = styled.form``;
 const NewToDoInput = styled.input``;
 const NewToDoButton = styled.button``;
+const ToDosContainer = styled.ol``;
+const ToDoWrapper = styled.li``;
+const ToDoLabel = styled.label``;
+const ToDoCheckBox = styled.input``;
+const ToDoContent = styled.span``;
 
 function ToDo() {
   const ACCESS_TOKEN = localStorage.getItem('wantedAccessToken') as string;
@@ -27,20 +32,32 @@ function ToDo() {
   };
 
   return (
-    <NewToDoForm
-      onSubmit={(event: React.FormEvent<HTMLFormElement>) => event.preventDefault()}
-    >
-      <NewToDoInput
-        data-testid="new-todo-input"
-        value={newToDo}
-        onChange={({ currentTarget: { value } }: React.ChangeEvent<HTMLInputElement>) =>
-          setNewToDo(value)
-        }
-      />
-      <NewToDoButton data-testid="new-todo-add-button" onClick={createToDo}>
-        추가
-      </NewToDoButton>
-    </NewToDoForm>
+    <>
+      <NewToDoForm
+        onSubmit={(event: React.FormEvent<HTMLFormElement>) => event.preventDefault()}
+      >
+        <NewToDoInput
+          data-testid="new-todo-input"
+          value={newToDo}
+          onChange={({ currentTarget: { value } }: React.ChangeEvent<HTMLInputElement>) =>
+            setNewToDo(value)
+          }
+        />
+        <NewToDoButton data-testid="new-todo-add-button" onClick={createToDo}>
+          추가
+        </NewToDoButton>
+      </NewToDoForm>
+      {toDos.map(({ id, todo, isCompleted }) => (
+        <ToDosContainer>
+          <ToDoWrapper key={id}>
+            <ToDoLabel>
+              <ToDoCheckBox type="checkbox" checked={isCompleted} />
+              <ToDoContent>{todo}</ToDoContent>
+            </ToDoLabel>
+          </ToDoWrapper>
+        </ToDosContainer>
+      ))}
+    </>
   );
 }
 
