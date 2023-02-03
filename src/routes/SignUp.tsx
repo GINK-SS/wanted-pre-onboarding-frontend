@@ -1,62 +1,49 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { fetchSignUp } from '../api';
+import { ISignResponse } from '../type';
+import { signValidation } from '../validator';
 
-const SignUpForm = styled.form`
+const SignForm = styled.form`
   display: flex;
   flex-direction: column;
 `;
-const SignUpInput = styled.input``;
-const SignUpButton = styled.button``;
-
-interface ISignUpResponse {
-  statusCode?: number;
-  message?: string;
-  error?: string;
-  access_token?: string;
-}
+const SignInput = styled.input``;
+const SignButton = styled.button``;
 
 function SignUp() {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [validation, setValidation] = useState(false);
+  const [onValid, setOnValid] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
-    userEmail.includes('@') && userPassword.length >= 8
-      ? setValidation(true)
-      : setValidation(false);
+    setOnValid(signValidation({ userEmail, userPassword }));
   }, [userEmail, userPassword]);
 
-  const signUpAPI = async () => {
-    const response: ISignUpResponse = await fetch(
-      'https://pre-onboarding-selection-task.shop/auth/signup',
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          email: userEmail,
-          password: userPassword,
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      }
-    ).then((res) => res.json());
+  const onClickEffect = async () => {
+    const signUpResponse: ISignResponse = await fetchSignUp({
+      userEmail,
+      userPassword,
+    });
 
-    if (response.statusCode === 400) {
-      return;
-    }
-    console.log('성공!');
+    if (signUpResponse.statusCode === 400) return;
+    history.replace('/signin');
   };
 
   return (
-    <SignUpForm
+    <SignForm
       onSubmit={(event: React.FormEvent<HTMLFormElement>) => event.preventDefault()}
     >
-      <SignUpInput
+      <SignInput
         data-testid="email-input"
         value={userEmail}
         onChange={({ currentTarget: { value } }: React.ChangeEvent<HTMLInputElement>) =>
           setUserEmail(value)
         }
       />
-      <SignUpInput
+      <SignInput
         data-testid="password-input"
         type="password"
         value={userPassword}
@@ -64,14 +51,10 @@ function SignUp() {
           setUserPassword(value)
         }
       />
-      <SignUpButton
-        data-testid="signup-button"
-        disabled={!validation}
-        onClick={signUpAPI}
-      >
+      <SignButton data-testid="signup-button" disabled={!onValid} onClick={onClickEffect}>
         회원가입
-      </SignUpButton>
-    </SignUpForm>
+      </SignButton>
+    </SignForm>
   );
 }
 
