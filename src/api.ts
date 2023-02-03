@@ -23,3 +23,12 @@ export function fetchSignIn({ userEmail, userPassword }: ISignInput) {
     headers: { 'Content-Type': 'application/json' },
   }).then((res) => res.json());
 }
+
+export function fetchGetToDos(accessToken: string) {
+  return fetch(`${BASE_URL}/todos`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }).then((res) => res.json());
+}

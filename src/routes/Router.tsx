@@ -1,6 +1,7 @@
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import ToDo from './ToDo';
 
 function Router() {
   return (
@@ -31,7 +32,7 @@ function Router() {
           path="/todo"
           component={() =>
             localStorage.getItem('wantedAccessToken') ? (
-              <Redirect to="/todo" />
+              <ToDo />
             ) : (
               <Redirect to="/signin" />
             )
