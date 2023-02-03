@@ -16,3 +16,9 @@ export interface IGetToDos {
   isCompleted: boolean;
   userId: number;
 }
+
+export interface IUpdateToDo {
+  id: number;
+  toDo: string;
+  isCompleted: boolean;
+}

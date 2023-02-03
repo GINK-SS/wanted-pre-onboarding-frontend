@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { fetchCreateToDo, fetchGetToDos } from '../api';
-import { IGetToDos } from '../type';
+import { fetchCreateToDo, fetchGetToDos, fetchUpdateToDo } from '../api';
+import { IGetToDos, IUpdateToDo } from '../type';
 
 const NewToDoForm = styled.form``;
 const NewToDoInput = styled.input``;
@@ -31,6 +31,12 @@ function ToDo() {
     setToDos(fetchToDos);
   };
 
+  const finishHandler = async ({ id, toDo, isCompleted }: IUpdateToDo) => {
+    const response = await fetchUpdateToDo(ACCESS_TOKEN, { id, toDo, isCompleted });
+    const fetchToDos: IGetToDos[] = await fetchGetToDos(ACCESS_TOKEN);
+    setToDos(fetchToDos);
+  };
+
   return (
     <>
       <NewToDoForm
@@ -47,16 +53,22 @@ function ToDo() {
           추가
         </NewToDoButton>
       </NewToDoForm>
-      {toDos.map(({ id, todo, isCompleted }) => (
-        <ToDosContainer>
+      <ToDosContainer>
+        {toDos.map(({ id, todo: toDo, isCompleted }) => (
           <ToDoWrapper key={id}>
             <ToDoLabel>
-              <ToDoCheckBox type="checkbox" checked={isCompleted} />
-              <ToDoContent>{todo}</ToDoContent>
+              <ToDoCheckBox
+                type="checkbox"
+                checked={isCompleted}
+                name={'isCompleted'}
+                value={isCompleted + ''}
+                onChange={() => finishHandler({ id, toDo, isCompleted })}
+              />
+              <ToDoContent>{toDo}</ToDoContent>
             </ToDoLabel>
           </ToDoWrapper>
-        </ToDosContainer>
-      ))}
+        ))}
+      </ToDosContainer>
     </>
   );
 }

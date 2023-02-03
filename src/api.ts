@@ -1,4 +1,4 @@
-import { ISignInput } from './type';
+import { ISignInput, IUpdateToDo } from './type';
 
 const BASE_URL = `https://pre-onboarding-selection-task.shop`;
 
@@ -42,6 +42,23 @@ export function fetchGetToDos(accessToken: string) {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${accessToken}`,
+    },
+  }).then((res) => res.json());
+}
+
+export function fetchUpdateToDo(
+  accessToken: string,
+  { id, toDo, isCompleted }: IUpdateToDo
+) {
+  return fetch(`${BASE_URL}/todos/:${id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      todo: toDo,
+      isCompleted: !isCompleted,
+    }),
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
     },
   }).then((res) => res.json());
 }
