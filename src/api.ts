@@ -24,6 +24,19 @@ export function fetchSignIn({ userEmail, userPassword }: ISignInput) {
   }).then((res) => res.json());
 }
 
+export function fetchCreateToDo(accessToken: string, toDo: string) {
+  return fetch(`${BASE_URL}/todos`, {
+    method: 'POST',
+    body: JSON.stringify({
+      todo: toDo,
+    }),
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  }).then((res) => res.json());
+}
+
 export function fetchGetToDos(accessToken: string) {
   return fetch(`${BASE_URL}/todos`, {
     method: 'GET',
