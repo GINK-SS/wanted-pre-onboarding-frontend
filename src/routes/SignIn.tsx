@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { fetchSignIn } from '../api';
 import {
   SignButton,
   SignContainer,
   SignForm,
   SignInput,
+  SignLink,
   SignTitle,
 } from '../style/sign/sign';
 import { ISignResponse } from '../type';
@@ -60,11 +61,14 @@ function SignIn() {
           data-testid="signin-button"
           disabled={!onValid}
           onClick={onClickEffect}
-          onValid={onValid}
+          isValid={onValid}
         >
           로그인
         </SignButton>
       </SignForm>
+      <Link to={'/signup'}>
+        <SignLink>투-두가 처음이라면 ?</SignLink>
+      </Link>
     </SignContainer>
   );
 }

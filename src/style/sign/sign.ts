@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const SignContainer = styled.div`
   background-color: rgba(250, 250, 250, 1);
-  margin: 0 auto;
   width: 500px;
   height: 500px;
   top: 50%;
@@ -12,6 +11,7 @@ export const SignContainer = styled.div`
   border: 0.2px solid rgba(0, 0, 0, 0.2);
   border-radius: 50px;
   box-shadow: 0px 0px 50px rgba(100, 100, 100, 0.2);
+  text-align: center;
 `;
 
 export const SignForm = styled.form`
@@ -42,14 +42,23 @@ export const SignInput = styled.input`
   }
 `;
 
-export const SignButton = styled.button<{ onValid: boolean }>`
+export const SignButton = styled.button<{ isValid: boolean }>`
   margin: 50px 20px 0;
   height: 30px;
   background-color: rgba(255, 255, 255, 1);
   border: ${(props) =>
-    props.onValid ? '0.1px solid rgba(0, 0, 0, 0.5)' : '0.1px solid rgba(0,0,0,0.1)'};
-  outline: ${(props) => (props.onValid ? '0.1px solid rgba(0, 0, 0, 0.1)' : 'none')};
+    props.isValid ? '0.1px solid rgba(0, 0, 0, 0.5)' : '0.1px solid rgba(0,0,0,0.1)'};
+  outline: ${(props) => (props.isValid ? '0.1px solid rgba(0, 0, 0, 0.1)' : 'none')};
   &:hover {
-    cursor: ${(props) => (props.onValid ? 'pointer' : 'default')};
+    cursor: ${(props) => (props.isValid ? 'pointer' : 'default')};
+  }
+`;
+
+export const SignLink = styled.span`
+  display: block;
+  margin-top: 20px;
+  color: rgba(0, 0, 0, 0.5);
+  &:hover {
+    color: rgba(0, 0, 0, 0.8);
   }
 `;
