@@ -50,11 +50,11 @@ export function fetchUpdateToDo(
   accessToken: string,
   { id, toDo, isCompleted }: IUpdateToDo
 ) {
-  return fetch(`${BASE_URL}/todos/:${id}`, {
+  return fetch(`${BASE_URL}/todos/${id}`, {
     method: 'PUT',
     body: JSON.stringify({
       todo: toDo,
-      isCompleted: !isCompleted,
+      isCompleted: isCompleted,
     }),
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -64,7 +64,7 @@ export function fetchUpdateToDo(
 }
 
 export function fetchDeleteToDo(accessToken: string, id: number) {
-  return fetch(`${BASE_URL}/todos/:${id}`, {
+  return fetch(`${BASE_URL}/todos/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${accessToken}`,

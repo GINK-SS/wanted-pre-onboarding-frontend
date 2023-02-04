@@ -32,7 +32,7 @@ function ToDo() {
     setToDos(fetchToDos);
   };
 
-  const finishHandler = async ({ id, toDo, isCompleted }: IUpdateToDo) => {
+  const updateToDo = async ({ id, toDo, isCompleted }: IUpdateToDo) => {
     const response = await fetchUpdateToDo(ACCESS_TOKEN, { id, toDo, isCompleted });
     const fetchToDos: IGetToDos[] = await fetchGetToDos(ACCESS_TOKEN);
     setToDos(fetchToDos);
