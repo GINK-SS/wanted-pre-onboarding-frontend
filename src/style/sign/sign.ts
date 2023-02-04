@@ -42,8 +42,13 @@ export const SignInput = styled.input`
   }
 `;
 
+export const SignMessage = styled.span`
+  color: rgba(255, 0, 0, 0.6);
+  margin-top: 15px;
+`;
+
 export const SignButton = styled.button<{ isValid: boolean }>`
-  margin: 50px 20px 0;
+  margin: 15px 20px 0;
   height: 30px;
   background-color: rgba(255, 255, 255, 1);
   border: ${(props) =>

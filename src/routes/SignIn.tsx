@@ -7,6 +7,7 @@ import {
   SignForm,
   SignInput,
   SignLink,
+  SignMessage,
   SignTitle,
 } from '../style/sign/sign';
 import { ISignResponse } from '../type';
@@ -16,6 +17,7 @@ function SignIn() {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [onValid, setOnValid] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const history = useHistory();
 
   useEffect(() => {
@@ -32,6 +34,7 @@ function SignIn() {
       localStorage.setItem('wantedAccessToken', signInResponse.access_token);
       history.replace('/todo');
     }
+    setErrorMsg('존재하지 않거나, 이메일과 비밀번호가 일치하지 않습니다.');
   };
 
   return (
@@ -57,6 +60,7 @@ function SignIn() {
             setUserPassword(value)
           }
         />
+        <SignMessage>{errorMsg}</SignMessage>
         <SignButton
           data-testid="signin-button"
           disabled={!onValid}

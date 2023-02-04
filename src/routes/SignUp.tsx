@@ -7,6 +7,7 @@ import {
   SignForm,
   SignInput,
   SignLink,
+  SignMessage,
   SignTitle,
 } from '../style/sign/sign';
 import { ISignResponse } from '../type';
@@ -16,6 +17,7 @@ function SignUp() {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [onValid, setOnValid] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const history = useHistory();
 
   useEffect(() => {
@@ -28,7 +30,10 @@ function SignUp() {
       userPassword,
     });
 
-    if (signUpResponse.statusCode === 400) return;
+    if (signUpResponse.statusCode === 400) {
+      setErrorMsg(signUpResponse.message as string);
+      return;
+    }
     history.replace('/signin');
   };
 
@@ -55,6 +60,7 @@ function SignUp() {
             setUserPassword(value)
           }
         />
+        <SignMessage>{errorMsg}</SignMessage>
         <SignButton
           data-testid="signup-button"
           disabled={!onValid}
