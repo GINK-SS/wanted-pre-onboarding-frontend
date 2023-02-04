@@ -1,13 +1,8 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import { fetchDeleteToDo, fetchGetToDos, fetchUpdateToDo } from '../api';
 import { IToDoProps, IUpdateToDo } from '../type';
 import ModifyToDo from './ModifyToDo';
-
-const ToDoWrapper = styled.li``;
-const ToDoLabel = styled.label``;
-const ToDoCheckBox = styled.input``;
-const ToDoContent = styled.span``;
+import { ToDoCheckBox, ToDoContent, ToDoLabel, ToDoWrapper } from '../style/toDo/toDo';
 
 function ToDo({ id, todo: toDo, isCompleted, ACCESS_TOKEN, setToDos }: IToDoProps) {
   const [modifyId, setModifyId] = useState(-999);

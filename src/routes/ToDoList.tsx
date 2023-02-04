@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { fetchGetToDos } from '../api';
 import CreateToDoForm from '../components/CreateToDoForm';
 import ToDo from '../components/ToDo';
+import { ToDosContainer, ToDoTitle } from '../style/toDo/toDo';
 import { IGetToDos } from '../type';
-
-const ToDosContainer = styled.ol``;
 
 function ToDoList() {
   const ACCESS_TOKEN = localStorage.getItem('wantedAccessToken') as string;
@@ -19,6 +17,7 @@ function ToDoList() {
 
   return (
     <>
+      <ToDoTitle>To - Do List</ToDoTitle>
       <CreateToDoForm ACCESS_TOKEN={ACCESS_TOKEN} setToDos={setToDos} />
       <ToDosContainer>
         {toDos.map(({ id, todo: toDo, isCompleted }) => (

@@ -1,11 +1,7 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import { fetchCreateToDo, fetchGetToDos } from '../api';
+import { NewToDoButton, NewToDoForm, NewToDoInput } from '../style/toDo/toDo';
 import { ICreateToDoProps } from '../type';
-
-const NewToDoForm = styled.form``;
-const NewToDoInput = styled.input``;
-const NewToDoButton = styled.button``;
 
 function CreateToDoForm({ ACCESS_TOKEN, setToDos }: ICreateToDoProps) {
   const [newToDo, setNewToDo] = useState('');
@@ -23,6 +19,8 @@ function CreateToDoForm({ ACCESS_TOKEN, setToDos }: ICreateToDoProps) {
       <NewToDoInput
         data-testid="new-todo-input"
         value={newToDo}
+        placeholder="할 일을 입력하세요"
+        maxLength={17}
         onChange={({ currentTarget: { value } }: React.ChangeEvent<HTMLInputElement>) =>
           setNewToDo(value)
         }

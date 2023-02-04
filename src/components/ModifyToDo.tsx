@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import {
+  ModifyToDoInput,
+  ModifyWrapper,
+  ToDoButton,
+  ToDoButtonRight,
+} from '../style/toDo/toDo';
 import { IModifyToDoProps } from '../type';
-
-const ModifyWrapper = styled.label``;
-const ModifyToDoInput = styled.input``;
-const ToDoButton = styled.button``;
 
 function ModifyToDo({
   id,
@@ -31,15 +32,16 @@ function ModifyToDo({
           >
             수정
           </ToDoButton>
-          <ToDoButton data-testid="delete-button" onClick={() => deleteToDo(id)}>
+          <ToDoButtonRight data-testid="delete-button" onClick={() => deleteToDo(id)}>
             삭제
-          </ToDoButton>
+          </ToDoButtonRight>
         </>
       ) : (
         <ModifyWrapper>
           <ModifyToDoInput
             data-testid="modify-input"
             value={modifyToDo}
+            maxLength={17}
             onChange={({ currentTarget: { value } }) => setModifyToDo(value)}
           />
           <ToDoButton
@@ -51,9 +53,9 @@ function ModifyToDo({
           >
             제출
           </ToDoButton>
-          <ToDoButton data-testid="cancel-button" onClick={() => setModifyId(-999)}>
+          <ToDoButtonRight data-testid="cancel-button" onClick={() => setModifyId(-999)}>
             취소
-          </ToDoButton>
+          </ToDoButtonRight>
         </ModifyWrapper>
       )}
     </>
