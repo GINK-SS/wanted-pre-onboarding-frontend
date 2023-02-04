@@ -22,3 +22,26 @@ export interface IUpdateToDo {
   toDo: string;
   isCompleted: boolean;
 }
+
+export interface ICreateToDoProps {
+  ACCESS_TOKEN: string;
+  setToDos: Function;
+}
+
+export interface IToDoProps {
+  id: number;
+  todo: string;
+  isCompleted: boolean;
+  ACCESS_TOKEN: string;
+  setToDos: Function;
+}
+
+export interface IModifyToDoProps {
+  id: number;
+  todo: string;
+  isCompleted: boolean;
+  modifyId: number;
+  setModifyId: Function;
+  updateToDo: Function;
+  deleteToDo: Function;
+}

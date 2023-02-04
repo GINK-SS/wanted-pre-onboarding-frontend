@@ -34,7 +34,7 @@ export function fetchCreateToDo(accessToken: string, toDo: string) {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
     },
-  }).then((res) => res.json());
+  });
 }
 
 export function fetchGetToDos(accessToken: string) {
@@ -60,7 +60,7 @@ export function fetchUpdateToDo(
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
     },
-  }).then((res) => res.json());
+  });
 }
 
 export function fetchDeleteToDo(accessToken: string, id: number) {
