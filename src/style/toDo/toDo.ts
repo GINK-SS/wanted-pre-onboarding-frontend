@@ -1,5 +1,23 @@
 import styled from 'styled-components';
 
+export const LogOutButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 500px;
+  background-color: rgba(0, 0, 0, 0.01);
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+  padding: 10px 20px;
+  cursor: pointer;
+  &:hover {
+    border: 1px solid rgba(0, 0, 0, 1);
+    color: rgba(0, 0, 0, 1);
+  }
+  transition: 0.5s;
+`;
+
 export const ToDoTitle = styled.span`
   display: block;
   margin: 150px 0 40px;
