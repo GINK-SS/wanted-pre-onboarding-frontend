@@ -69,5 +69,5 @@ export function fetchDeleteToDo(accessToken: string, id: number) {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-  }).then((res) => res.json());
+  });
 }

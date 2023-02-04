@@ -43,9 +43,10 @@ function ToDo() {
   };
 
   const deleteToDo = async (id: number) => {
-    const response = await fetchDeleteToDo(ACCESS_TOKEN, id);
-    const fetchToDos: IGetToDos[] = await fetchGetToDos(ACCESS_TOKEN);
-    setToDos(fetchToDos);
+    await fetchDeleteToDo(ACCESS_TOKEN, id).then(async () => {
+      const fetchToDos: IGetToDos[] = await fetchGetToDos(ACCESS_TOKEN);
+      setToDos(fetchToDos);
+    });
   };
 
   return (
