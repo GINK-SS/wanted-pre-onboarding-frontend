@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
 import { fetchSignIn } from '../api';
+import {
+  SignButton,
+  SignContainer,
+  SignForm,
+  SignInput,
+  SignTitle,
+} from '../style/sign/sign';
 import { ISignResponse } from '../type';
 import { signValidation } from '../validator';
-
-const SignForm = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-const SignInput = styled.input``;
-const SignButton = styled.button``;
 
 function SignIn() {
   const [userEmail, setUserEmail] = useState('');
@@ -35,28 +34,38 @@ function SignIn() {
   };
 
   return (
-    <SignForm
-      onSubmit={(event: React.FormEvent<HTMLFormElement>) => event.preventDefault()}
-    >
-      <SignInput
-        data-testid="email-input"
-        value={userEmail}
-        onChange={({ currentTarget: { value } }: React.ChangeEvent<HTMLInputElement>) =>
-          setUserEmail(value)
-        }
-      />
-      <SignInput
-        data-testid="password-input"
-        type="password"
-        value={userPassword}
-        onChange={({ currentTarget: { value } }: React.ChangeEvent<HTMLInputElement>) =>
-          setUserPassword(value)
-        }
-      />
-      <SignButton data-testid="signin-button" disabled={!onValid} onClick={onClickEffect}>
-        로그인
-      </SignButton>
-    </SignForm>
+    <SignContainer>
+      <SignTitle>To - Do</SignTitle>
+      <SignForm
+        onSubmit={(event: React.FormEvent<HTMLFormElement>) => event.preventDefault()}
+      >
+        <SignInput
+          data-testid="email-input"
+          value={userEmail}
+          placeholder="이메일"
+          onChange={({ currentTarget: { value } }: React.ChangeEvent<HTMLInputElement>) =>
+            setUserEmail(value)
+          }
+        />
+        <SignInput
+          data-testid="password-input"
+          type="password"
+          value={userPassword}
+          placeholder="비밀번호"
+          onChange={({ currentTarget: { value } }: React.ChangeEvent<HTMLInputElement>) =>
+            setUserPassword(value)
+          }
+        />
+        <SignButton
+          data-testid="signin-button"
+          disabled={!onValid}
+          onClick={onClickEffect}
+          onValid={onValid}
+        >
+          로그인
+        </SignButton>
+      </SignForm>
+    </SignContainer>
   );
 }
 
