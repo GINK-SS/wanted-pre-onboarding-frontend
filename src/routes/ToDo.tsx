@@ -12,11 +12,15 @@ const ToDoLabel = styled.label``;
 const ToDoCheckBox = styled.input``;
 const ToDoContent = styled.span``;
 const ToDoButton = styled.button``;
+const ModifyWrapper = styled.label``;
+const ModifyToDoInput = styled.input``;
 
 function ToDo() {
   const ACCESS_TOKEN = localStorage.getItem('wantedAccessToken') as string;
   const [toDos, setToDos] = useState<IGetToDos[]>([]);
   const [newToDo, setNewToDo] = useState('');
+  const [modifyId, setModifyId] = useState(-999);
+  const [modifyToDo, setModifyToDo] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -61,24 +65,60 @@ function ToDo() {
         </NewToDoButton>
       </NewToDoForm>
       <ToDosContainer>
-        {toDos.map(({ id, todo: toDo, isCompleted }) => (
-          <ToDoWrapper key={id}>
-            <ToDoLabel>
-              <ToDoCheckBox
-                type="checkbox"
-                checked={isCompleted}
-                name={'isCompleted'}
-                value={isCompleted + ''}
-                onChange={() => finishHandler({ id, toDo, isCompleted })}
-              />
-              <ToDoContent>{toDo}</ToDoContent>
-            </ToDoLabel>
-            <ToDoButton data-testid="modify-button">수정</ToDoButton>
-            <ToDoButton data-testid="delete-button" onClick={() => deleteToDo(id)}>
-              삭제
-            </ToDoButton>
-          </ToDoWrapper>
-        ))}
+        {toDos.map(({ id, todo: toDo, isCompleted }) => {
+          return (
+            <ToDoWrapper key={id}>
+              <ToDoLabel>
+                <ToDoCheckBox
+                  type="checkbox"
+                  checked={isCompleted}
+                  onChange={() => updateToDo({ id, toDo, isCompleted: !isCompleted })}
+                />
+                {id !== modifyId ? <ToDoContent>{toDo}</ToDoContent> : null}
+              </ToDoLabel>
+              {id !== modifyId ? (
+                <>
+                  <ToDoButton
+                    id={id + ''}
+                    data-testid="modify-button"
+                    onClick={({ currentTarget: { id } }) => {
+                      setModifyToDo(toDo);
+                      setModifyId(+id);
+                    }}
+                  >
+                    수정
+                  </ToDoButton>
+                  <ToDoButton data-testid="delete-button" onClick={() => deleteToDo(id)}>
+                    삭제
+                  </ToDoButton>
+                </>
+              ) : (
+                <ModifyWrapper>
+                  <ModifyToDoInput
+                    data-testid="modify-input"
+                    value={modifyToDo}
+                    onChange={({ currentTarget: { value } }) => setModifyToDo(value)}
+                  />
+                  <ToDoButton
+                    data-testid="submit-button"
+                    onClick={() => {
+                      updateToDo({ id, toDo: modifyToDo, isCompleted });
+                      setModifyId(-999);
+                    }}
+                  >
+                    제출
+                  </ToDoButton>
+                  <ToDoButton
+                    data-testid="cancel-button"
+                    onClick={() => setModifyId(-999)}
+                  >
+                    취소
+                  </ToDoButton>
+                </ModifyWrapper>
+              )}
+            </ToDoWrapper>
+          );
+        })}
       </ToDosContainer>
     </>
   );
